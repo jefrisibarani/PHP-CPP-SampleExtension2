@@ -1,17 +1,32 @@
 cmake_minimum_required(VERSION 3.11-3.18)
 
-# Add php-cpp source directory to our build
-add_subdirectory(d:/projects/php-cpp/PHP-CPP-cmake build-php-cpp)
+# Uncomment and set the value, or set directly with cmake
 
+# On Linux, uncomment to set different php-config filename 
+#set(PHP_CONFIG_FILENAME "php-config")
+
+# Common PHP-CPP build options
+#set(PHPCPP_BUILD_SHARED   TRUE)  # Build PHP-CPP static or shared library
+#set(PHPCPP_BUILD_EXAMPLES FALSE) # Build PHP-CPP example extensions
+#set(PHPCPP_INSTALL        FALSE) # Generate PHP-CPP install target
+
+# Options for building on Windows with MSVC
+# -----------------------------------------------------------------------------
+# PHP devel pack dir, download from https://windows.php.net/download/
+#set(PHP_DEV_DIR         "d:/dev/cpp_php/ts/php-7.4.30-devel-vc15-x64")
+# Set to TRUE if PHP was compiled with thread safe
+#set(PHPCPP_COMPILE_TS   TRUE)
+# Set to "x86_64" if architecture and PHP was compiled under x64 or "x86" for 32 bit
+#set(PHPCPP_ARCH         "x86_64")
+
+
+# Add PHP-CPP source directory to our build
+add_subdirectory(PHP-CPP-cmake EXCLUDE_FROM_ALL)
+
+
+# The extension
+# -----------------------------------------------------------------------------
 set(MY_EXTENSION_NAME "my_extension")
-
-if(PHPCPP_BUILD_SHARED)
-   message(STATUS "Using php-cpp shared library...")
-else()
-   message(STATUS "Using php-cpp static library...")
-endif()
-
-
 project(${MY_EXTENSION_NAME})
 add_library(${PROJECT_NAME} MODULE )
 target_sources(${PROJECT_NAME} PRIVATE ${MY_EXTENSION_NAME}.cpp)

@@ -1,5 +1,10 @@
 @echo off
-rem author: jefrisibarani@gmail.com
+
+REM
+REM Test the extension
+REM
+REM Author: jefrisibarani@gmail.com
+REM
 
 set argC=0
 for %%x in (%*) do Set /A argC+=1
@@ -22,7 +27,7 @@ set drive=%~d0%
 set workdir=%~p0%
 set prj_root=%drive%%workdir%
 set php_root=d:\wampje\php\php.7.4.30
-set phpcpp_root=%prj_root%
+set phpcpp_compiled_root=%prj_root%\_output
 
 rem sample name
 set sample=%arg_sample%
@@ -41,7 +46,7 @@ if "%arg_lib%"=="static" (
 
 
 if "%lib_mode%"=="shared" (
-   copy %phpcpp_root%\_output\lib_shared\%build_mode%\phpcpp.dll %php_root% /y
+   copy %phpcpp_compiled_root%\lib_shared\%build_mode%\phpcpp.dll %php_root% /y
 )
 
 %php_root%\php.exe -dextension=%prj_root%_output\%lib_mode%\%build_mode%\%sample%.dll %prj_root%%sample%.php
